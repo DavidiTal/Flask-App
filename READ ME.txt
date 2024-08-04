@@ -1,0 +1,17 @@
+Submitted by: Tal Davidi
+ID: 208871376
+
+GIT:
+https://github.com/DavidiTal?tab=repositories
+
+Notes:
+
+I chose to include most of the fields mentioned in Task 1 in the HTML file.
+However, based on my knowledge of the automotive world, I selected specific required fields that are most important when buying a car. These fields will appear with a red asterisk, preceded by a note.
+
+Highlights and explanations about certain fields:
+
+Date fields will appear in the format DD/MM/YYYY.
+Numeric fields cannot have negative values.
+The Year field will be between 1980 and the current year.
+I kept the Description field, which is referred to as "free text" on real websites.

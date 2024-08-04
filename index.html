@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חיזוי מחיר רכב</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+            direction: rtl;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        .required:after {
+            content: " *";
+            color: red;
+        }
+        input, select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .note {
+            font-size: 1.1em;
+            color: #d9534f;
+            margin-bottom: 15px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>חיזוי מחיר רכב</h1>
+        <p class="note">שדות המסומנים ב* הם שדות חובה</p>
+        <form id="carForm" action="/predict" method="post">
+            <label class="required" for="manufactor">יצרן:</label>
+            <input type="text" id="manufactor" name="manufactor" value="{{ form_data.get('manufactor', '') }}" required><br>
+
+            <label class="required" for="model">דגם:</label>
+            <input type="text" id="model" name="model" value="{{ form_data.get('model', '') }}" required><br>
+
+            <label class="required" for="Year">שנה:</label>
+            <input type="number" id="Year" name="Year" min="1980" max="{{ current_year }}" value="{{ form_data.get('Year', '') }}" required><br>
+
+            <label class="required" for="Km">קילומטראז' (ק"מ):</label>
+            <input type="number" id="Km" name="Km" min="0" value="{{ form_data.get('Km', '') }}" required><br>
+
+            <label class="required" for="Gear">תיבת הילוכים:</label>
+            <input type="text" id="Gear" name="Gear" value="{{ form_data.get('Gear', '') }}" required><br>
+
+            <label class="required" for="Engine_type">סוג מנוע:</label>
+            <input type="text" id="Engine_type" name="Engine_type" pattern="[A-Za-zא-ת\s]+" title="אנא הכנס אותיות בלבד" value="{{ form_data.get('Engine_type', '') }}" required><br>
+
+            <label class="required" for="capacity_Engine">נפח מנוע:</label>
+            <input type="number" id="capacity_Engine" name="capacity_Engine" min="0" value="{{ form_data.get('capacity_Engine', '') }}" required><br>
+
+            <label class="required" for="Prev_ownership">בעלות קודמת:</label>
+            <input type="text" id="Prev_ownership" name="Prev_ownership" value="{{ form_data.get('Prev_ownership', '') }}" required><br>
+
+            <label class="required" for="Curr_ownership">בעלות נוכחית:</label>
+            <input type="text" id="Curr_ownership" name="Curr_ownership" value="{{ form_data.get('Curr_ownership', '') }}" required><br>
+
+            <label for="Repub_date">תאריך הקפצה:</label>
+            <input type="text" id="Repub_date" name="Repub_date" pattern="\d{2}/\d{2}/\d{4}" placeholder="DD/MM/YYYY" value="{{ form_data.get('Repub_date', '') }}"><br>
+
+            <label for="Cre_date">תאריך יצירה:</label>
+            <input type="text" id="Cre_date" name="Cre_date" pattern="\d{2}/\d{2}/\d{4}" placeholder="DD/MM/YYYY" value="{{ form_data.get('Cre_date', '') }}"><br>
+
+            <label for="Color">צבע:</label>
+            <input type="text" id="Color" name="Color" value="{{ form_data.get('Color', '') }}"><br>
+
+            <label for="Area">אזור:</label>
+            <input type="text" id="Area" name="Area" value="{{ form_data.get('Area', '') }}"><br>
+
+            <label for="City">עיר:</label>
+            <input type="text" id="City" name="City" value="{{ form_data.get('City', '') }}"><br>
+
+            <label for="Test">טסט:</label>
+            <input type="text" id="Test" name="Test" pattern="\d{2}/\d{2}/\d{4}" placeholder="DD/MM/YYYY" value="{{ form_data.get('Test', '') }}"><br>
+
+            <label for="Description">תיאור:</label>
+            <input type="text" id="Description" name="Description" value="{{ form_data.get('Description', '') }}"><br>
+
+            <button type="submit">חיזוי מחיר</button>
+        </form>
+
+        {% if prediction_text %}
+        <h2>{{ prediction_text }}</h2>
+        {% endif %}
+    </div>
+</body>
+</html>
